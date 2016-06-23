@@ -2,7 +2,7 @@
  * @providesModule ExNavigationTabBar
  */
 
-import React from 'react';
+import React, { PropTypes } from 'react';
 
 import {
   StyleSheet,
@@ -14,15 +14,20 @@ import {
 
 import TabBadge from 'ExNavigationBadge';
 
-const TAB_BAR_HEIGHT = 56;
-
 export default class ExNavigationTabBar extends React.Component {
-  static height = TAB_BAR_HEIGHT;
+
+  static propTypes = {
+    items: PropTypes.array,
+    renderTitleComponent: PropTypes.func,
+    style: View.propTypes.style,
+    tabItemContainerStyle: View.propTypes.style,
+    badgeStyle: View.propTypes.style,
+  };
 
   render() {
     return (
-      <View style={styles.container}>
-        <View style={styles.itemContainer}>
+      <View style={[styles.container, this.props.style]}>
+        <View style={[styles.itemContainer, this.props.tabContainerStyle]}>
           {this.renderTabItems()}
         </View>
       </View>
@@ -48,7 +53,10 @@ export default class ExNavigationTabBar extends React.Component {
       let badge = null;
       if (item.badgeText) {
         badge = (
-          <TabBadge style={styles.badge}>{item.badgeText}</TabBadge>
+          <TabBadge
+            badgeTextStyle={this.props.badgeTextStyle}
+            style={[styles.badge, this.props.badgeStyle]}>{item.badgeText}
+          </TabBadge>
         );
       }
 
@@ -87,7 +95,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    height: TAB_BAR_HEIGHT,
+    height: 56,
     backgroundColor: '#fefefe',
     borderTopColor: '#b2b2b2',
     borderTopWidth: StyleSheet.hairlineWidth,

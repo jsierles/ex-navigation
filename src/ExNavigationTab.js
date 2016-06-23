@@ -132,6 +132,7 @@ class ExNavigationTab extends PureComponent<any, Props, State> {
     const tabBarProps = {
       selectedTab: navigationState.routes[navigationState.index].key,
       items: this.state.tabItems,
+      style: this.props.tabBarStyle
     };
 
     const tabBar = this.props.renderTabBar(tabBarProps);
